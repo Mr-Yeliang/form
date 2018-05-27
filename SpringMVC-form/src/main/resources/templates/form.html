@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title></title>
+<script src="jquery-3.3.1.min.js"></script>
+<style type="text/css">
+fieldset {
+	width: 200px;
+	height: 250px;
+	margin: 100px auto;
+	padding: 20px;
+}
+</style>
+<script type="text/javascript">
+	$(function() {
+		//姓名验证
+		function name_check() {
+			var reg = /^[A-Za-z]\w+$/; //正则表达式 必须以字母开头的账号
+			if ($("#name").val() == "") {
+				$("#name").next().html("姓名不能为空");
+				return false;
+			} else if ($("#name").val().lenght() > 6) {
+				$("#name").next().html("姓名不得超过6位");
+				return false;
+			} else if ($("#name").val().search(reg) == -1) {
+				$("#name").next().html("姓名必须是以 字母开头的 可以包含数字字母下划线的字符串");
+				return false;
+			} else {
+				$("#name").next().html("ok");
+				return true;
+			}
+			return true;
+		}
+
+		//邮箱验证
+		function email_check() {
+			var reg = /^\w+@\w+(\.\w+){1,2}$/; //因为邮箱 xxx @ xxx . xxx     xxx 可以是 数字字母下划线 结束 可以 是 .com 或者 .com.cn
+			if ($("#email").val() == "") {
+				$("#email").next().html("email不能为空");
+				return false;
+			} else if ($("#email").val().search(reg) == -1) {
+				$("#email").next().html("邮箱格式不正确 xxx @ xxx . xxx");
+				return false;
+			} else {
+				$("#emailId").next().html("ok");
+				return true;
+			}
+			return true;
+		}
+
+		$("#name").blur(name_check);
+
+		$("#email").blur(email_check);
+
+		function tijiao() {
+			if (!(name_check())) {
+				$("#reset").next().html("上面的验证都通过了吗？");
+				return false;
+			} else if (!(email_check())) {
+				$("#reset").next().html("上面的验证都通过了吗？");
+				return false;
+			} else {
+				$("#reset").next().html("好的 验证通过了。");
+				return true;
+			}
+			return true;
+		}
+		$("#myform").submit(function() {
+			return tijiao();
+		});
+	});
+</script>
+</head>
+<body>
+	<fieldset>
+		<legend>保存信息</legend>
+		<form id="myform" action="save">
+			<p>
+				姓名： <input type="text" id="name" name="name" maxlength="6"
+					required="required" />
+			</p>
+			<p>
+				年龄 :<br/><input type="number" id="age" name="age" min="1" max="150" />
+			</p>
+			<p>
+				邮箱：<input type="email" id="email" name="email" required="required" />
+			</p>
+			<p>
+				<input type="submit" value="提交" /> <input type="reset" value="重置"
+					id="reset" />
+			</p>
+		</form>
+	</fieldset>
+
+
+
+</body>
+</html>
